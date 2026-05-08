@@ -2,11 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project_F.Pages.LoginPage"
-             Title="NewPage1">
-    <VerticalStackLayout Padding="30" Spacing="15">
+             Background="Black"
+             >
+    <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
 
     <Label Text="Login"
            FontSize="28"
+           FontAttributes="Bold"
            HorizontalOptions="Center"/>
 
     <Entry Placeholder="Email"
@@ -17,9 +19,15 @@
            Text="{Binding Password}" />
 
     <Button Text="Login"
+            CornerRadius="20"
+            BackgroundColor="Orange"
+            WidthRequest="200"
             Command="{Binding LoginCommand}" />
 
     <Button Text="Create Account"
+            CornerRadius="20"
+            BackgroundColor="Orange"
+            WidthRequest="200"
             Command="{Binding GoToRegisterCommand}" />
 
 </VerticalStackLayout>

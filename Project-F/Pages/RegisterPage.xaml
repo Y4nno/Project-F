@@ -2,8 +2,24 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project_F.Pages.RegisterPage"
-             Title="RegisterPage">
-    <VerticalStackLayout Padding="30" Spacing="15">
+             BackgroundColor="Black">
+    <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+
+        <Border 
+        BackgroundColor="Orange"
+        StrokeShape="RoundRectangle 15"
+        Padding="10"
+        HorizontalOptions="Center">
+
+            <Label 
+            Text="MI"
+            FontSize="24"
+            FontAttributes="Bold"
+            TextColor="Black"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+
+        </Border>
 
         <Label Text="Sign Up"
            FontSize="28"
@@ -20,9 +36,15 @@
            Text="{Binding Password}" />
 
         <Button Text="Create Account"
+                CornerRadius="20"
+                BackgroundColor="Orange"
+                WidthRequest="200"
             Command="{Binding RegisterCommand}" />
 
         <Button Text="Back to Login"
+                CornerRadius="20"
+                BackgroundColor="Orange"
+                WidthRequest="200"
             Command="{Binding BackCommand}" />
 
     </VerticalStackLayout>

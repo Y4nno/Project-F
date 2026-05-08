@@ -6,6 +6,7 @@
     xmlns:pages="clr-namespace:Project_F.Pages"
     Title="Project_F">
 
+    <ShellContent Route="WelcomePage" ContentTemplate="{DataTemplate pages:WelcomePage}" />
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate pages:LoginPage}" />
     <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate pages:RegisterPage}" />
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate pages:HomePage}" />
