@@ -23,10 +23,15 @@ public class LoginViewModel
             return;
         }
 
-        // Save session (optional but important)
         Preferences.Set("idToken", token);
         Preferences.Set("uid", uid);
 
+        // ✅ Fetch name from Firestore and save it
+        string? displayName = await _authService.GetUserNameAsync(uid!, token!);
+        Preferences.Set("user_display_name", displayName ?? Email.Split('@')[0]);
+
         await Shell.Current.GoToAsync("//HomePage");
     }
+
+
 }

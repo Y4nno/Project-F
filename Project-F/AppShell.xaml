@@ -9,5 +9,7 @@
     <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate pages:LoginPage}" />
     <ShellContent Route="RegisterPage" ContentTemplate="{DataTemplate pages:RegisterPage}" />
     <ShellContent Route="HomePage" ContentTemplate="{DataTemplate pages:HomePage}" />
+    <ShellContent Route="CalendarPage" ContentTemplate="{DataTemplate pages:CalendarPage}" />
+    <ShellContent Route="ProfilePage" ContentTemplate="{DataTemplate pages:ProfilePage}" />
 
 </Shell>

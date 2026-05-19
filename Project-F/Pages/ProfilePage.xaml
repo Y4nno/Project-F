@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Project_F.ViewModels"
+             x:Class="Project_F.Pages.ProfilePage"
+             BackgroundColor="#1A1A1A"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.BindingContext>
+        <vm:ProfileViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions="*, 70">
+
+        <!-- ===== MAIN CONTENT ===== -->
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout
+                Padding="40,60,40,40"
+                Spacing="0"
+                VerticalOptions="Center"
+                HorizontalOptions="Center">
+
+                <!-- Avatar Icon -->
+                <Border
+                    WidthRequest="90"
+                    HeightRequest="90"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="45" />
+                    </Border.StrokeShape>
+                    <Image
+                        Source="profile_avatar.png"
+                        WidthRequest="90"
+                        HeightRequest="90"
+                        HorizontalOptions="Center" />
+                </Border>
+
+                <!-- Display Name -->
+                <Label
+                    Text="{Binding DisplayName}"
+                    FontSize="22"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    Margin="0,14,0,48">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding DisplayName}"
+                                  TextColor="{StaticResource Orange}"
+                                  FontAttributes="Bold"
+                                  FontSize="22" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+
+                <!-- Switch Account Button -->
+                <Border
+                    Margin="0,0,0,16"
+                    Padding="0"
+                    WidthRequest="220"
+                    HeightRequest="48"
+                    BackgroundColor="#2A2A2A"
+                    Stroke="{StaticResource Orange}"
+                    StrokeThickness="1.5"
+                    HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding SwitchAccountCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontSize="15">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Switch " TextColor="{StaticResource Orange}" FontAttributes="Bold" FontSize="15"/>
+                                <Span Text="Account" TextColor="#FFFFFF" FontSize="15"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Border>
+
+                <!-- Log Out Button -->
+                <Border
+                    Padding="0"
+                    WidthRequest="220"
+                    HeightRequest="48"
+                    BackgroundColor="#2A2A2A"
+                    Stroke="{StaticResource Orange}"
+                    StrokeThickness="1.5"
+                    HorizontalOptions="Center">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding LogOutCommand}" />
+                    </Border.GestureRecognizers>
+                    <Label
+                        Text="Log Out"
+                        TextColor="#FFFFFF"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        FontSize="15" />
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- ===== BOTTOM NAV BAR (copied from CalendarPage) ===== -->
+        <Grid Grid.Row="1"
+              BackgroundColor="#1F1F1F"
+              ColumnDefinitions="*,*,*">
+
+            <BoxView Grid.ColumnSpan="3"
+                     Color="{StaticResource Orange}"
+                     HeightRequest="2"
+                     VerticalOptions="Start"/>
+
+            <!-- Home Button -->
+            <Button Grid.Column="0"
+                    BackgroundColor="Transparent"
+                    Clicked="OnHomeClicked">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="&#xf015;"
+                                     FontFamily="FontAwesome"
+                                     Color="{StaticResource Orange}"
+                                     Size="24"/>
+                </Button.ImageSource>
+            </Button>
+
+            <!-- Calendar Button -->
+            <Button Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    Clicked="OnCalendarClicked">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="&#xf073;"
+                                     FontFamily="FontAwesome"
+                                     Color="{StaticResource Orange}"
+                                     Size="24"/>
+                </Button.ImageSource>
+            </Button>
+
+            <!-- Profile Button (active page) -->
+            <Button Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    Clicked="OnProfileClicked">
+                <Button.ImageSource>
+                    <FontImageSource Glyph="&#xf007;"
+                                     FontFamily="FontAwesome"
+                                     Color="{StaticResource Orange}"
+                                     Size="24"/>
+                </Button.ImageSource>
+            </Button>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>

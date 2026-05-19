@@ -97,4 +97,32 @@ public class FirebaseAuthService
         var doc = JsonDocument.Parse(resJson);
         return (true, doc.RootElement, null);
     }
+
+    // Add this method — nothing else changed
+    public async Task<string?> GetUserNameAsync(string uid, string idToken)
+    {
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get,
+                $"{FirestoreUrl}/users/{uid}?key={ApiKey}");
+            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", idToken);
+
+            var response = await _http.SendAsync(request);
+            var json = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode) return null;
+
+            var doc = JsonDocument.Parse(json);
+            var fields = doc.RootElement.GetProperty("fields");
+
+            if (fields.TryGetProperty("name", out var nameField))
+                return nameField.GetProperty("stringValue").GetString();
+
+            return null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }
