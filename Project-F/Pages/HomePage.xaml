@@ -1,11 +1,219 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Project_F.Models"
              x:Class="Project_F.Pages.HomePage"
-             Title="NewPage1">
-    <VerticalStackLayout Padding="30">
-        <Label Text="Welcome!"
-           FontSize="24"
-           HorizontalOptions="Center"/>
-    </VerticalStackLayout>
+             BackgroundColor="#111111"
+             Title="Finance Tracker">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- BALANCE HEADER -->
+        <Frame Grid.Row="0"
+               BackgroundColor="#FF8C00"
+               CornerRadius="0"
+               Padding="24,40,24,20"
+               HasShadow="False">
+            <VerticalStackLayout Spacing="2">
+                <Label Text="Current balance"
+                       FontSize="13"
+                       TextColor="#7a3c00"
+                       FontAttributes="Bold"/>
+                <Label x:Name="BalanceLabel"
+                       Text="₱0.00"
+                       FontSize="38"
+                       FontAttributes="Bold"
+                       TextColor="#2a1200"/>
+                <Label x:Name="UpdatedLabel"
+                       Text="Updated just now"
+                       FontSize="12"
+                       TextColor="#7a3c00"/>
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- SCROLLABLE CONTENT -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="0">
+
+                <!-- INCOME / EXPENSE SUMMARY -->
+                <Grid ColumnDefinitions="*,*"
+                      Padding="16,14"
+                      ColumnSpacing="10"
+                      BackgroundColor="#1A1A1A">
+
+                    <!-- Income card -->
+                    <Frame Grid.Column="0"
+                           BackgroundColor="#222222"
+                           CornerRadius="12"
+                           Padding="14,12"
+                           HasShadow="False"
+                           BorderColor="#333333">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="↓  Income"
+                                   FontSize="12"
+                                   TextColor="#888888"/>
+                            <Label x:Name="IncomeLabel"
+                                   Text="₱0.00"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#4ec9b0"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Expense card -->
+                    <Frame Grid.Column="1"
+                           BackgroundColor="#222222"
+                           CornerRadius="12"
+                           Padding="14,12"
+                           HasShadow="False"
+                           BorderColor="#333333">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="↑  Expenses"
+                                   FontSize="12"
+                                   TextColor="#888888"/>
+                            <Label x:Name="ExpenseLabel"
+                                   Text="₱0.00"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="#e06060"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </Grid>
+
+                <!-- ADD TRANSACTION FORM -->
+                <Frame Margin="16,4,16,14"
+                       BackgroundColor="#1E1E1E"
+                       CornerRadius="16"
+                       Padding="16"
+                       BorderColor="#FF8C00"
+                       HasShadow="False">
+                    <VerticalStackLayout Spacing="10">
+
+                        <Label Text="Add transaction"
+                               FontSize="15"
+                               FontAttributes="Bold"
+                               TextColor="#FF8C00"/>
+
+                        <Entry x:Name="TitleEntry"
+                               Placeholder="Transaction title"
+                               PlaceholderColor="#666"
+                               TextColor="White"
+                               BackgroundColor="#2A2A2A"/>
+
+                        <Entry x:Name="AmountEntry"
+                               Placeholder="Amount (₱)"
+                               Keyboard="Numeric"
+                               PlaceholderColor="#666"
+                               TextColor="White"
+                               BackgroundColor="#2A2A2A"/>
+
+                        <!-- Income / Expense toggle -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                            <Button x:Name="IncomeBtn"
+                                    Grid.Column="0"
+                                    Text="↓  Income"
+                                    Clicked="OnIncomeTypeSelected"
+                                    BackgroundColor="#FF8C001A"
+                                    TextColor="#FF8C00"
+                                    BorderColor="#FF8C00"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    FontSize="13"
+                                    HeightRequest="40"/>
+                            <Button x:Name="ExpenseBtn"
+                                    Grid.Column="1"
+                                    Text="↑  Expense"
+                                    Clicked="OnExpenseTypeSelected"
+                                    BackgroundColor="#2A2A2A"
+                                    TextColor="#888"
+                                    BorderColor="#333"
+                                    BorderWidth="1"
+                                    CornerRadius="8"
+                                    FontSize="13"
+                                    HeightRequest="40"/>
+                        </Grid>
+
+                        <Button Text="Add transaction"
+                                Clicked="OnAddTransactionClicked"
+                                BackgroundColor="#FF8C00"
+                                TextColor="#2a1200"
+                                FontAttributes="Bold"
+                                CornerRadius="10"
+                                HeightRequest="46"
+                                FontSize="14"/>
+
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- TRANSACTIONS HEADER -->
+                <Label Text="RECENT TRANSACTIONS"
+                       FontSize="11"
+                       FontAttributes="Bold"
+                       TextColor="#888"
+                       Margin="16,0,16,8"
+                       CharacterSpacing="1"/>
+
+                <!-- TRANSACTION LIST -->
+                <CollectionView x:Name="TransactionCollection"
+                                Margin="16,0,16,20">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="8"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:TransactionModel">
+                            <Frame BackgroundColor="#1E1E1E"
+                                   BorderColor="#2A2A2A"
+                                   CornerRadius="14"
+                                   Padding="14,12"
+                                   HasShadow="False">
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+
+                                    <!-- Icon circle -->
+                                    <Frame Grid.Column="0"
+                                           WidthRequest="40"
+                                           HeightRequest="40"
+                                           CornerRadius="10"
+                                           Padding="0"
+                                           HasShadow="False"
+                                           BackgroundColor="{Binding TypeColor}"
+                                           VerticalOptions="Center">
+                                        <Label Text="{Binding TypeIcon}"
+                                               FontSize="18"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Frame>
+
+                                    <!-- Title + type -->
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         VerticalOptions="Center"
+                                                         Spacing="2">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="#EEEEEE"/>
+                                        <Label Text="{Binding Type}"
+                                               FontSize="12"
+                                               TextColor="#888"/>
+                                    </VerticalStackLayout>
+
+                                    <!-- Amount -->
+                                    <Label Grid.Column="2"
+                                           Text="{Binding DisplayAmount}"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding AmountColor}"
+                                           VerticalOptions="Center"/>
+
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+    </Grid>
+
 </ContentPage>
