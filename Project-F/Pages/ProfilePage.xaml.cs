@@ -13,7 +13,6 @@ public partial class ProfilePage : ContentPage
     {
         base.OnAppearing();
 
-        // Refresh the display name every time the page appears
         if (BindingContext is ProfileViewModel vm)
         {
             vm.LoadUserInfo();
@@ -21,11 +20,11 @@ public partial class ProfilePage : ContentPage
     }
 
     async void OnHomeClicked(object sender, EventArgs e)
-    => await Shell.Current.GoToAsync("//HomePage");
+        => await Shell.Current.GoToAsync("//HomePage");
 
     async void OnCalendarClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//CalendarPage");
 
-    void OnProfileClicked(object sender, EventArgs e) { } // already here
-
+    async void OnProfileClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//ProfilePage");
 }

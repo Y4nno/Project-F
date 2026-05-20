@@ -1,2 +1,1 @@
-int id maui_custom_view_target_running_callbacks_tag 0x0
-int string maui_empty_unused 0x0
+int string androidx_startup 0x0

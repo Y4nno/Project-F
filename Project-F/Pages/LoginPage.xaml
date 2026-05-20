@@ -2,33 +2,125 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project_F.Pages.LoginPage"
-             Background="Black"
-             >
-    <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+             Title="Login"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#1D1D1D">
 
-    <Label Text="Login"
-           FontSize="28"
-           FontAttributes="Bold"
-           HorizontalOptions="Center"/>
+    <Grid RowDefinitions="Auto, *, Auto">
 
-    <Entry Placeholder="Email"
-           Text="{Binding Email}" />
+        <!-- TOP: Logo -->
+        <HorizontalStackLayout Grid.Row="0"
+                               HorizontalOptions="Center"
+                               Margin="0,60,0,0">
+            <Label Text="MI"
+                   FontSize="40"
+                   FontFamily="Koulen"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Orange}"
+                   VerticalOptions="Center"/>
+            <Label Text="DAS"
+                   FontSize="40"
+                   FontFamily="Koulen"
+                   FontAttributes="Bold"
+                   TextColor="#FFFFFF"
+                   VerticalOptions="Center"/>
+        </HorizontalStackLayout>
 
-    <Entry Placeholder="Password"
-           IsPassword="True"
-           Text="{Binding Password}" />
+        <!-- CENTER: Form -->
+        <VerticalStackLayout Grid.Row="1"
+                             Padding="40,0"
+                             Spacing="0"
+                             VerticalOptions="Center"
+                             Margin="0,-40,0,0">
 
-    <Button Text="Login"
-            CornerRadius="20"
-            BackgroundColor="Orange"
-            WidthRequest="200"
-            Command="{Binding LoginCommand}" />
+            <!-- Email Label -->
+            <Label Text="EMAIL"
+                   FontSize="11"
+                   FontFamily="Kumbh Sans"
+                   TextColor="{StaticResource Orange}"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,6"/>
 
-    <Button Text="Create Account"
-            CornerRadius="20"
-            BackgroundColor="Orange"
-            WidthRequest="200"
-            Command="{Binding GoToRegisterCommand}" />
+            <!-- Email Entry -->
+            <Border BackgroundColor="#FFFFFF"
+                    StrokeThickness="0"
+                    Margin="0,0,0,20">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30"/>
+                </Border.StrokeShape>
+                <Entry Placeholder=""
+                       Text="{Binding Email}"
+                       BackgroundColor="Transparent"
+                       TextColor="#1C1C1C"
+                       FontFamily="Kumbh Sans"
+                       HeightRequest="50"
+                       Margin="12,0"/>
+            </Border>
 
-</VerticalStackLayout>
+            <!-- Password Label -->
+            <Label Text="PASSWORD"
+                   FontSize="11"
+                   FontFamily="Kumbh Sans"
+                   TextColor="{StaticResource Orange}"
+                   CharacterSpacing="1.5"
+                   Margin="0,0,0,6"/>
+
+            <!-- Password Entry -->
+            <Border BackgroundColor="#FFFFFF"
+                    StrokeThickness="0"
+                    Margin="0,0,0,50">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="30"/>
+                </Border.StrokeShape>
+                <Entry Placeholder=""
+                       IsPassword="True"
+                       Text="{Binding Password}"
+                       BackgroundColor="Transparent"
+                       TextColor="#1C1C1C"
+                       FontFamily="Koulen"
+                       HeightRequest="50"
+                       Margin="12,0"/>
+            </Border>
+
+            <!-- Login Button -->
+            <Button Text="LOGIN"
+                    FontFamily="Kumbh Sans"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    CharacterSpacing="1.5"
+                    TextColor="#000000"
+                    BackgroundColor="{StaticResource Orange}"
+                    HeightRequest="50"
+                    CornerRadius="25"
+                    HorizontalOptions="Center"
+                    WidthRequest="220"
+                    Command="{Binding LoginCommand}"/>
+
+        </VerticalStackLayout>
+
+        <!-- BOTTOM: Create Account -->
+        <VerticalStackLayout Grid.Row="2"
+                             HorizontalOptions="Center"
+                             Spacing="6"
+                             Margin="0,0,0,40">
+            <Label Text="Don't have an account yet?"
+                   FontSize="12"
+                   FontFamily="Kumbh Sans"
+                   TextColor="#AAAAAA"
+                   HorizontalOptions="Center"/>
+            <Label Text="CREATE ACCOUNT"
+                   FontSize="12"
+                   FontFamily="Koulen"
+                   TextColor="{StaticResource Orange}" 
+                   CharacterSpacing="1.5"
+                   TextDecorations="None"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding GoToRegisterCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+
+    </Grid>
+
 </ContentPage>

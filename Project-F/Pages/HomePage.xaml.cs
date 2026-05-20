@@ -10,12 +10,7 @@ public partial class HomePage : ContentPage
     ObservableCollection<TransactionModel> transactions = new();
 
     double totalBalance = 0;
-    double totalIncome = 0;
-    double totalExpenses = 0;
-
     string selectedType = "Income";
-
-    string projectId = "project-f-c6e4e";
     string userId => App.UserId;
 
     public HomePage()
@@ -25,46 +20,34 @@ public partial class HomePage : ContentPage
         _ = LoadTransactions();
     }
 
-    private void OnIncomeTypeSelected(object sender, EventArgs e)
+    // ── FUNDS POPUP ───────────────────────────────────
+    private void OnAddFundsClicked(object sender, EventArgs e)
     {
         selectedType = "Income";
-        IncomeBtn.BackgroundColor = Color.FromArgb("#FF8C001A");
-        IncomeBtn.TextColor = Color.FromArgb("#FF8C00");
-        IncomeBtn.BorderColor = Color.FromArgb("#FF8C00");
-        ExpenseBtn.BackgroundColor = Color.FromArgb("#2A2A2A");
-        ExpenseBtn.TextColor = Color.FromArgb("#888888");
-        ExpenseBtn.BorderColor = Color.FromArgb("#333333");
+        PopupTitle.Text = "Add Funds";
+        FundsAmountEntry.Text = "";
+        FundsOverlay.IsVisible = true;
     }
 
-    private void OnExpenseTypeSelected(object sender, EventArgs e)
+    private void OnMinusFundsClicked(object sender, EventArgs e)
     {
         selectedType = "Expense";
-        ExpenseBtn.BackgroundColor = Color.FromArgb("#FF8C001A");
-        ExpenseBtn.TextColor = Color.FromArgb("#FF8C00");
-        ExpenseBtn.BorderColor = Color.FromArgb("#FF8C00");
-        IncomeBtn.BackgroundColor = Color.FromArgb("#2A2A2A");
-        IncomeBtn.TextColor = Color.FromArgb("#888888");
-        IncomeBtn.BorderColor = Color.FromArgb("#333333");
+        PopupTitle.Text = "Minus Funds";
+        FundsAmountEntry.Text = "";
+        FundsOverlay.IsVisible = true;
     }
 
-    private async void OnAddTransactionClicked(object sender, EventArgs e)
+    private async void OnUpdateFundsClicked(object sender, EventArgs e)
     {
-        if (string.IsNullOrWhiteSpace(TitleEntry.Text) ||
-            string.IsNullOrWhiteSpace(AmountEntry.Text))
+        if (!double.TryParse(FundsAmountEntry.Text, out double amount) || amount <= 0)
         {
-            await DisplayAlert("Error", "Fill all fields.", "OK");
-            return;
-        }
-
-        if (!double.TryParse(AmountEntry.Text, out double amount))
-        {
-            await DisplayAlert("Error", "Invalid amount.", "OK");
+            await DisplayAlert("Error", "Enter a valid amount.", "OK");
             return;
         }
 
         var transaction = new TransactionModel
         {
-            Title = TitleEntry.Text,
+            Title = selectedType == "Income" ? "Funds were added" : "Funds were deducted",
             Amount = amount,
             Type = selectedType,
             UserId = userId
@@ -84,12 +67,11 @@ public partial class HomePage : ContentPage
         string json = JsonConvert.SerializeObject(firestoreData);
 
         using var client = new HttpClient();
-
         var idToken = Preferences.Get("idToken", null);
 
         if (string.IsNullOrEmpty(idToken))
         {
-            await DisplayAlert("Error", "No login token found. Please login again.", "OK");
+            await DisplayAlert("Error", "No login token found.", "OK");
             return;
         }
 
@@ -97,9 +79,7 @@ public partial class HomePage : ContentPage
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", idToken);
 
         var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        string url =
-            $"https://firestore.googleapis.com/v1/projects/project-f-c6e4e/databases/(default)/documents/transactions";
+        string url = "https://firestore.googleapis.com/v1/projects/project-f-c6e4e/databases/(default)/documents/transactions";
 
         var response = await client.PostAsync(url, content);
 
@@ -110,22 +90,22 @@ public partial class HomePage : ContentPage
             return;
         }
 
-        TitleEntry.Text = "";
-        AmountEntry.Text = "";
-        OnIncomeTypeSelected(null, null);
-
+        FundsOverlay.IsVisible = false;
         await LoadTransactions();
     }
 
+    private void OnCancelFundsClicked(object sender, EventArgs e)
+    {
+        FundsOverlay.IsVisible = false;
+    }
+
+    // ── LOAD TRANSACTIONS ─────────────────────────────
     private async Task LoadTransactions()
     {
         transactions.Clear();
         totalBalance = 0;
-        totalIncome = 0;
-        totalExpenses = 0;
 
         using var client = new HttpClient();
-
         var idToken = Preferences.Get("idToken", null);
 
         if (string.IsNullOrEmpty(idToken))
@@ -137,8 +117,7 @@ public partial class HomePage : ContentPage
         client.DefaultRequestHeaders.Authorization =
             new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", idToken);
 
-        string url =
-            $"https://firestore.googleapis.com/v1/projects/project-f-c6e4e/databases/(default)/documents/transactions";
+        string url = "https://firestore.googleapis.com/v1/projects/project-f-c6e4e/databases/(default)/documents/transactions";
 
         try
         {
@@ -147,10 +126,7 @@ public partial class HomePage : ContentPage
             if (response.StatusCode == System.Net.HttpStatusCode.Forbidden)
             {
                 var text = await response.Content.ReadAsStringAsync();
-                await DisplayAlert(
-                    "403 Forbidden",
-                    "Firebase rejected request.\nCheck Firestore rules or login token.\n\n" + text,
-                    "OK");
+                await DisplayAlert("403 Forbidden", text, "OK");
                 return;
             }
 
@@ -159,18 +135,14 @@ public partial class HomePage : ContentPage
             var json = await response.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(json);
 
-            if (data?.documents == null)
-                return;
+            if (data?.documents == null) return;
 
             foreach (var doc in data.documents)
             {
                 string uid = doc.fields.UserId.stringValue;
-
-                if (uid != userId)
-                    continue;
+                if (uid != userId) continue;
 
                 double amount = 0;
-
                 if (doc.fields.Amount.doubleValue != null)
                     amount = (double)doc.fields.Amount.doubleValue;
                 else if (doc.fields.Amount.integerValue != null)
@@ -187,22 +159,14 @@ public partial class HomePage : ContentPage
                 transactions.Add(transaction);
 
                 if (transaction.Type == "Income")
-                {
-                    totalIncome += transaction.Amount;
                     totalBalance += transaction.Amount;
-                }
                 else
-                {
-                    totalExpenses += transaction.Amount;
                     totalBalance -= transaction.Amount;
-                }
             }
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
                 BalanceLabel.Text = $"₱{totalBalance:F2}";
-                IncomeLabel.Text = $"₱{totalIncome:F2}";
-                ExpenseLabel.Text = $"₱{totalExpenses:F2}";
             });
         }
         catch (Exception ex)
@@ -210,4 +174,14 @@ public partial class HomePage : ContentPage
             await DisplayAlert("Error", ex.Message, "OK");
         }
     }
+
+    // ── NAV BAR ──────────────────────────────────────
+    private async void OnHomeClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//HomePage");
+
+    private async void OnCalendarClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//CalendarPage");
+
+    private async void OnProfileClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//ProfilePage");
 }

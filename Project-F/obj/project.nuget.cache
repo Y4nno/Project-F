@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ra8Nrlp9ZQU=",
+  "dgSpecHash": "+NMFxLVoY+c=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Documents\\GitHub\\Project-F\\Project-F\\Project-F.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\Project-F\\Project-F\\Project-F.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\googlegson\\2.13.1.1\\googlegson.2.13.1.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.configuration\\10.0.0\\microsoft.extensions.configuration.10.0.0.nupkg.sha512",
@@ -28,10 +28,11 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.maui.graphics\\10.0.20\\microsoft.maui.graphics.10.0.20.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.maui.graphics.win2d.winui.desktop\\10.0.20\\microsoft.maui.graphics.win2d.winui.desktop.10.0.20.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.maui.resizetizer\\10.0.20\\microsoft.maui.resizetizer.10.0.20.nupkg.sha512",
-    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.5\\microsoft.net.illink.tasks.10.0.5.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.8\\microsoft.net.illink.tasks.10.0.8.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.web.webview2\\1.0.3179.45\\microsoft.web.webview2.1.0.3179.45.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.windows.sdk.buildtools\\10.0.22621.756\\microsoft.windows.sdk.buildtools.10.0.22621.756.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.windowsappsdk\\1.7.250909003\\microsoft.windowsappsdk.1.7.250909003.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\xamarin.android.glide\\4.16.0.14\\xamarin.android.glide.4.16.0.14.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\xamarin.android.glide.annotations\\4.16.0.14\\xamarin.android.glide.annotations.4.16.0.14.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\xamarin.android.glide.disklrucache\\4.16.0.14\\xamarin.android.glide.disklrucache.4.16.0.14.nupkg.sha512",

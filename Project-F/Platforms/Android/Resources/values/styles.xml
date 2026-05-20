@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<style name="Maui.MainTheme" parent="Theme.MaterialComponents.DayNight">
+		<item name="android:windowBackground">@color/colorBackground</item>
+		<item name="android:windowIsTranslucent">false</item>
+	</style>
+
+	<color name="colorBackground">#111111</color>
+</resources>

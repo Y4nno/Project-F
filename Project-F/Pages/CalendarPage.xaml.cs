@@ -34,16 +34,17 @@ namespace Project_F.Pages
             BuildCalendar();
         }
 
-        void OnHomeClicked(object sender, EventArgs e)
+        private async void OnHomeClicked(object sender, EventArgs e)
         {
+            await Shell.Current.GoToAsync("//HomePage");
         }
 
-        void OnCalendarClicked(object sender, EventArgs e)
+        private async void OnCalendarClicked(object sender, EventArgs e)
         {
+            await Shell.Current.GoToAsync("//CalendarPage");
         }
 
-        // ✅ ADDED
-        async void OnProfileClicked(object sender, EventArgs e)
+        private async void OnProfileClicked(object sender, EventArgs e)
         {
             await Shell.Current.GoToAsync("//ProfilePage");
         }

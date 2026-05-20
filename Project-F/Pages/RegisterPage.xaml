@@ -2,50 +2,205 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project_F.Pages.RegisterPage"
-             BackgroundColor="Black">
-    <VerticalStackLayout Padding="30" Spacing="15" VerticalOptions="Center">
+             Title="Sign Up"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#272727">
 
-        <Border 
-        BackgroundColor="Orange"
-        StrokeShape="RoundRectangle 15"
-        Padding="10"
-        HorizontalOptions="Center">
+    <Grid RowDefinitions="Auto, *, Auto">
 
-            <Label 
-            Text="MI"
-            FontSize="24"
-            FontAttributes="Bold"
-            TextColor="Black"
-            HorizontalOptions="Center"
-            VerticalOptions="Center"/>
+        <!-- TOP: Logo -->
+        <HorizontalStackLayout Grid.Row="0"
+                               HorizontalOptions="Center"
+                               Margin="0,60,0,0">
+            <Label Text="MI"
+                   FontSize="40"
+                   FontFamily="Koulen"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Orange}"
+                   VerticalOptions="Center"/>
+            <Label Text="DAS"
+                   FontSize="40"
+                   FontFamily="Koulen"
+                   FontAttributes="Bold"
+                   TextColor="#FFFFFF"
+                   VerticalOptions="Center"/>
+        </HorizontalStackLayout>
 
-        </Border>
+        <!-- CENTER: Form -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="40,0"
+                                 Spacing="0"
+                                 VerticalOptions="Center"
+                                 Margin="0,20,0,0">
 
-        <Label Text="Sign Up"
-           FontSize="28"
-           HorizontalOptions="Center"/>
+                <!-- Name Label -->
+                <Label Text="NAME"
+                       FontSize="11"
+                       FontFamily="Kumbh Sans"
+                       TextColor="{StaticResource Orange}"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,6"/>
 
-        <Entry Placeholder="Name"
-           Text="{Binding Name}" />
+                <!-- Name Entry -->
+                <Border BackgroundColor="#FFFFFF"
+                        StrokeThickness="0"
+                        Margin="0,0,0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <Entry Placeholder=""
+                           Text="{Binding Name}"
+                           BackgroundColor="Transparent"
+                           TextColor="#1C1C1C"
+                           FontFamily="Kumbh Sans"
+                           HeightRequest="50"
+                           Margin="12,0"/>
+                </Border>
 
-        <Entry Placeholder="Email"
-           Text="{Binding Email}" />
+                <!-- Email Label -->
+                <Label Text="EMAIL"
+                       FontSize="11"
+                       FontFamily="Kumbh Sans"
+                       TextColor="{StaticResource Orange}"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,6"/>
 
-        <Entry Placeholder="Password"
-           IsPassword="True"
-           Text="{Binding Password}" />
+                <!-- Email Entry -->
+                <Border BackgroundColor="#FFFFFF"
+                        StrokeThickness="0"
+                        Margin="0,0,0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <Entry Placeholder=""
+                           Text="{Binding Email}"
+                           BackgroundColor="Transparent"
+                           TextColor="#1C1C1C"
+                           FontFamily="Kumbh Sans"
+                           HeightRequest="50"
+                           Margin="12,0"/>
+                </Border>
 
-        <Button Text="Create Account"
-                CornerRadius="20"
-                BackgroundColor="Orange"
-                WidthRequest="200"
-            Command="{Binding RegisterCommand}" />
+                <!-- Password Label -->
+                <Label Text="PASSWORD"
+                       FontSize="11"
+                       FontFamily="Kumbh Sans"
+                       TextColor="{StaticResource Orange}"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,6"/>
 
-        <Button Text="Back to Login"
-                CornerRadius="20"
-                BackgroundColor="Orange"
-                WidthRequest="200"
-            Command="{Binding BackCommand}" />
+                <!-- Password Entry with Show/Hide -->
+                <Border BackgroundColor="#FFFFFF"
+                        StrokeThickness="0"
+                        Margin="0,0,0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Entry Grid.Column="0"
+                               x:Name="PasswordEntry"
+                               Placeholder=""
+                               IsPassword="True"
+                               Text="{Binding Password}"
+                               BackgroundColor="Transparent"
+                               TextColor="#1C1C1C"
+                               FontFamily="Kumbh Sans"
+                               HeightRequest="50"
+                               Margin="12,0"/>
+                        <Label Grid.Column="1"
+                               x:Name="PasswordToggle"
+                               Text="SHOW"
+                               FontSize="8"
+                               VerticalOptions="Center"
+                               Margin="0,0,16,0"
+                               TextColor="#888888">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnTogglePassword"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Border>
 
-    </VerticalStackLayout>
+                <!-- Confirm Password Label -->
+                <Label Text="CONFIRM PASSWORD"
+                       FontSize="11"
+                       FontFamily="Kumbh Sans"
+                       TextColor="{StaticResource Orange}"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,6"/>
+
+                <!-- Confirm Password Entry with Show/Hide -->
+                <Border BackgroundColor="#FFFFFF"
+                        StrokeThickness="0"
+                        Margin="0,0,0,40">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="30"/>
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Entry Grid.Column="0"
+                               x:Name="ConfirmPasswordEntry"
+                               Placeholder=""
+                               IsPassword="True"
+                               Text="{Binding ConfirmPassword}"
+                               BackgroundColor="Transparent"
+                               TextColor="#1C1C1C"
+                               FontFamily="Kumbh Sans"
+                               HeightRequest="50"
+                               Margin="12,0"/>
+                        <Label Grid.Column="1"
+                               x:Name="ConfirmPasswordToggle"
+                               Text="SHOW"
+                               FontSize="8"
+                               VerticalOptions="Center"
+                               Margin="0,0,16,0"
+                               TextColor="#888888">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleConfirmPassword"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                </Border>
+
+                <!-- Sign Up Button -->
+                <Button Text="SIGN UP"
+                        FontFamily="Kumbh Sans"
+                        FontAttributes="Bold"
+                        FontSize="16"
+                        CharacterSpacing="1.5"
+                        TextColor="#000000"
+                        BackgroundColor="{StaticResource Orange}"
+                        HeightRequest="50"
+                        CornerRadius="25"
+                        HorizontalOptions="Center"
+                        WidthRequest="220"
+                        Command="{Binding RegisterCommand}"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- BOTTOM: Back to Login -->
+        <VerticalStackLayout Grid.Row="2"
+                             HorizontalOptions="Center"
+                             Spacing="6"
+                             Margin="0,0,0,40">
+            <Label Text="Already have an account?"
+                   FontSize="12"
+                   FontFamily="Kumbh Sans"
+                   TextColor="#AAAAAA"
+                   HorizontalOptions="Center"/>
+            <Label Text="LOGIN"
+                   FontSize="12"
+                   FontFamily="Koulen"
+                   TextColor="{StaticResource Orange}"
+                   CharacterSpacing="1.5"
+                   TextDecorations="None"
+                   HorizontalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BackCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </VerticalStackLayout>
+
+    </Grid>
+
 </ContentPage>

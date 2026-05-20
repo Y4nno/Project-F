@@ -182,41 +182,28 @@
                      VerticalOptions="Start"/>
 
             <Button Grid.Column="0"
-                    x:Name="HomeNavButton"
-                    BackgroundColor="Transparent"
-                    Clicked="OnHomeClicked">
-                <Button.ImageSource>
-                    <FontImageSource Glyph="&#xf015;"
-                                     FontFamily="FontAwesome"
-                                     Color="{StaticResource Orange}"
-                                     Size="24"/>
-                </Button.ImageSource>
-            </Button>
+                x:Name="HomeNavButton"
+                BackgroundColor="Transparent"
+                Clicked="OnHomeClicked"
+                ImageSource="home.png"
+                WidthRequest="150"
+                HeightRequest="50"/>
 
             <Button Grid.Column="1"
-                    x:Name="CalendarNavButton"
-                    BackgroundColor="Transparent"
-                    Clicked="OnCalendarClicked">
-                <Button.ImageSource>
-                    <FontImageSource Glyph="&#xf073;"
-                                     FontFamily="FontAwesome"
-                                     Color="{StaticResource Orange}"
-                                     Size="24"/>
-                </Button.ImageSource>
-            </Button>
+                x:Name="CalendarNavButton"
+                BackgroundColor="Transparent"
+                Clicked="OnCalendarClicked"
+                ImageSource="calendar.png"
+                WidthRequest="50"
+                HeightRequest="50"/>
 
-            <!-- ✅ ADDED: Profile button -->
             <Button Grid.Column="2"
-                    x:Name="ProfileNavButton"
-                    BackgroundColor="Transparent"
-                    Clicked="OnProfileClicked">
-                <Button.ImageSource>
-                    <FontImageSource Glyph="&#xf007;"
-                                     FontFamily="FontAwesome"
-                                     Color="{StaticResource Orange}"
-                                     Size="24"/>
-                </Button.ImageSource>
-            </Button>
+                x:Name="ProfileNavButton"
+                BackgroundColor="Transparent"
+                Clicked="OnProfileClicked"
+                ImageSource="profile.png"
+                WidthRequest="80"
+                HeightRequest="50"/>
 
         </Grid>
 

@@ -12,9 +12,10 @@ build_property.ProjectTypeGuids = 9A19103F-16F7-4668-BE54-9A1E7A4F7556
 build_property.InvariantGlobalization = 
 build_property.PlatformNeutralAssembly = 
 build_property.EnforceExtendedAnalyzerRules = 
+build_property.EntryPointFilePath = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Project_F
-build_property.ProjectDir = C:\Users\Admin\Documents\GitHub\Project-F\Project-F\
+build_property.ProjectDir = C:\Users\Admin\source\repos\Project-F\Project-F\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTAotOptimizerEnabled = true
@@ -28,7 +29,7 @@ build_property.CsWinRTUseWindowsUIXamlProjections = false
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/App.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
@@ -38,7 +39,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/AppShell.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
@@ -48,7 +49,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/MainPage.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
@@ -58,7 +59,17 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/Pages/HomePage.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/CalendarPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.CalendarPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\CalendarPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\CalendarPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/HomePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.HomePage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\HomePage.xaml
@@ -68,7 +79,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/Pages/LoginPage.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/LoginPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.LoginPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\LoginPage.xaml
@@ -78,7 +89,17 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/Pages/RegisterPage.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/ProfilePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.ProfilePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\ProfilePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\ProfilePage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/RegisterPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.RegisterPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Pages\RegisterPage.xaml
@@ -88,7 +109,17 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/Resources/Styles/Colors.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/Pages/WelcomePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Pages.WelcomePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Pages\WelcomePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Pages\WelcomePage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[C:/Users/Admin/source/repos/Project-F/Project-F/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
@@ -98,7 +129,7 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
-[C:/Users/Admin/Documents/GitHub/Project-F/Project-F/Resources/Styles/Styles.xaml]
+[C:/Users/Admin/source/repos/Project-F/Project-F/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = Project_F.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
