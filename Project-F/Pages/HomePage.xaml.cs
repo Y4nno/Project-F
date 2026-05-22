@@ -12,6 +12,8 @@ public partial class HomePage : ContentPage
     double totalBalance = 0;
     string selectedType = "Income";
     string selectedIcon = "💰";
+    string editSelectedIcon = "💰";
+    TransactionModel? editingTransaction = null;
     string userId => App.UserId;
 
     public HomePage()
@@ -19,6 +21,14 @@ public partial class HomePage : ContentPage
         InitializeComponent();
         TransactionCollection.ItemsSource = transactions;
         _ = LoadTransactions();
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        string name = Preferences.Get("user_display_name", "U");
+        WelcomeLabel.Text = !string.IsNullOrEmpty(name) ? name : "Welcome back";
+        AvatarLabel.Text = name.Length > 0 ? name[0].ToString().ToUpper() : "U";
     }
 
     // ── ICON SELECTION ────────────────────────────────
@@ -31,7 +41,16 @@ public partial class HomePage : ContentPage
         }
     }
 
-    // ── FUNDS POPUP ───────────────────────────────────
+    private void OnEditIconSelected(object sender, TappedEventArgs e)
+    {
+        if (e.Parameter is string icon)
+        {
+            editSelectedIcon = icon;
+            EditSelectedIconLabel.Text = icon;
+        }
+    }
+
+    // ── ADD FUNDS POPUP ───────────────────────────────
     private void OnAddFundsClicked(object sender, EventArgs e)
     {
         selectedType = "Income";
@@ -85,7 +104,6 @@ public partial class HomePage : ContentPage
         };
 
         string json = JsonConvert.SerializeObject(firestoreData);
-
         using var client = new HttpClient();
         var idToken = Preferences.Get("idToken", null);
 
@@ -115,8 +133,110 @@ public partial class HomePage : ContentPage
     }
 
     private void OnCancelFundsClicked(object sender, EventArgs e)
+        => FundsOverlay.IsVisible = false;
+
+    // ── TRANSACTION TAP (EDIT/DELETE) ─────────────────
+    private async void OnTransactionLongPressed(object sender, TappedEventArgs e)
     {
-        FundsOverlay.IsVisible = false;
+        if (e.Parameter is not TransactionModel transaction) return;
+
+        editingTransaction = transaction;
+        editSelectedIcon = transaction.Icon ?? "💰";
+
+        EditAmountEntry.Text = transaction.Amount.ToString("F2");
+        EditDescriptionEntry.Text = transaction.Title;
+        EditSelectedIconLabel.Text = editSelectedIcon;
+
+        EditOverlay.IsVisible = true;
+    }
+
+    private async void OnSaveEditClicked(object sender, EventArgs e)
+    {
+        if (editingTransaction == null) return;
+
+        if (!double.TryParse(EditAmountEntry.Text, out double amount) || amount <= 0)
+        {
+            await DisplayAlert("Error", "Enter a valid amount.", "OK");
+            return;
+        }
+
+        string description = string.IsNullOrWhiteSpace(EditDescriptionEntry.Text)
+            ? editingTransaction.Title ?? ""
+            : EditDescriptionEntry.Text.Trim();
+
+        var firestoreData = new
+        {
+            fields = new
+            {
+                Title = new { stringValue = description },
+                Icon = new { stringValue = editSelectedIcon },
+                Amount = new { doubleValue = amount },
+                Type = new { stringValue = editingTransaction.Type ?? "Expense" },
+                UserId = new { stringValue = userId }
+            }
+        };
+
+        string json = JsonConvert.SerializeObject(firestoreData);
+        using var client = new HttpClient();
+        var idToken = Preferences.Get("idToken", null);
+
+        if (string.IsNullOrEmpty(idToken)) return;
+
+        client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", idToken);
+
+        var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        // PATCH to the document's full path
+        string url = $"https://firestore.googleapis.com/v1/{editingTransaction.DocumentPath}?updateMask.fieldPaths=Title&updateMask.fieldPaths=Icon&updateMask.fieldPaths=Amount&updateMask.fieldPaths=Type&updateMask.fieldPaths=UserId";
+
+        var response = await client.PatchAsync(url, content);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Error", error, "OK");
+            return;
+        }
+
+        EditOverlay.IsVisible = false;
+        editingTransaction = null;
+        await LoadTransactions();
+    }
+
+    private async void OnDeleteClicked(object sender, EventArgs e)
+    {
+        if (editingTransaction == null) return;
+
+        bool confirm = await DisplayAlert("Delete", "Delete this transaction?", "Delete", "Cancel");
+        if (!confirm) return;
+
+        using var client = new HttpClient();
+        var idToken = Preferences.Get("idToken", null);
+        if (string.IsNullOrEmpty(idToken)) return;
+
+        client.DefaultRequestHeaders.Authorization =
+            new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", idToken);
+
+        string url = $"https://firestore.googleapis.com/v1/{editingTransaction.DocumentPath}";
+        var response = await client.DeleteAsync(url);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var error = await response.Content.ReadAsStringAsync();
+            await DisplayAlert("Error", error, "OK");
+            return;
+        }
+
+        EditOverlay.IsVisible = false;
+        editingTransaction = null;
+        await LoadTransactions();
+    }
+
+    private void OnCancelEditClicked(object sender, EventArgs e)
+    {
+        EditOverlay.IsVisible = false;
+        editingTransaction = null;
     }
 
     // ── LOAD TRANSACTIONS ─────────────────────────────
@@ -169,7 +289,9 @@ public partial class HomePage : ContentPage
                     amount = (double)doc.fields.Amount.integerValue;
 
                 string icon = "💰";
-                try { icon = doc.fields.Icon.stringValue ?? "💰"; } catch { }
+                try { icon = doc.fields.Icon?.stringValue ?? "💰"; } catch { }
+
+                string docName = doc.name;
 
                 var transaction = new TransactionModel
                 {
@@ -177,7 +299,8 @@ public partial class HomePage : ContentPage
                     Icon = icon,
                     Amount = amount,
                     Type = doc.fields.Type.stringValue,
-                    UserId = uid
+                    UserId = uid,
+                    DocumentPath = docName
                 };
 
                 transactions.Add(transaction);
@@ -199,7 +322,7 @@ public partial class HomePage : ContentPage
         }
     }
 
-    // ── NAV BAR ──────────────────────────────────────
+    // ── NAV BAR ───────────────────────────────────────
     private async void OnHomeClicked(object sender, EventArgs e)
         => await Shell.Current.GoToAsync("//HomePage");
 

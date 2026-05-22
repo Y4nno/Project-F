@@ -8,6 +8,7 @@ public class TransactionModel
     public string? Type { get; set; }
     public string? UserId { get; set; }
     public DateTime Date { get; set; } = DateTime.Today;
+    public string? DocumentPath { get; set; }
 
     public string DisplayAmount => Type == "Income"
         ? $"+₱{Amount:F2}"
