@@ -2,208 +2,198 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Project_F.Pages.CalendarPage"
-             BackgroundColor="#1A1A1A"
+             BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="BgColor">#1A1A1A</Color>
-            <Color x:Key="CardBg">#252525</Color>
-            <Color x:Key="Green">#4CAF50</Color>
-            <Color x:Key="GreenDark">#2E7D32</Color>
-            <Color x:Key="GreenLight">#A5D6A7</Color>
-            <Color x:Key="White">#FFFFFF</Color>
-            <Color x:Key="SubText">#AAAAAA</Color>
-            <Color x:Key="Border">#333333</Color>
-            <Color x:Key="CalendarBg">#1B2E1C</Color>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+    <Grid RowDefinitions="*,70">
 
-    <Grid RowDefinitions="*, 70">
-
-        <!-- MAIN SCROLL CONTENT -->
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout Spacing="0" Padding="16,20,16,10">
+            <VerticalStackLayout Spacing="0" Padding="24,50,24,24">
 
-                <!-- ═══════════════════════════════════ -->
-                <!--           CALENDAR CARD            -->
-                <!-- ═══════════════════════════════════ -->
-                <VerticalStackLayout Spacing="10">
-                    <!-- JANUARY -->
-                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2" >
-                        <Grid ColumnDefinitions="Auto,*,Auto" Margin="0,0,0,20">
+                <!-- HEADER -->
+                <Label Text="Calendar"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalOptions="Center"
+                       Margin="0,0,0,24"/>
+
+                <!-- CALENDAR CARD -->
+                <Border BackgroundColor="#1E1E1E"
+                        StrokeThickness="0"
+                        Margin="0,0,0,20">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,4" Radius="12" Opacity="0.3"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Padding="20,20" Spacing="16">
+
+                        <!-- MONTH NAV -->
+                        <Grid ColumnDefinitions="Auto,*,Auto">
                             <Button Grid.Column="0"
                                     BackgroundColor="Transparent"
                                     Clicked="OnPrevMonthClicked"
-                                    Padding="6"
-                                    x:Name="PrevMonthButton">
-                                <Button.ImageSource>
-                                    <FontImageSource Glyph="&#xf053;"
-                                                     FontFamily="FontAwesome"
-                                                     Color="{StaticResource Orange}"
-                                                     Size="18"/>
-                                </Button.ImageSource>
-                            </Button>
+                                    Text="‹"
+                                    TextColor="#FF8C00"
+                                    FontSize="28"
+                                    Padding="0"
+                                    WidthRequest="40"
+                                    HeightRequest="40"/>
 
                             <Label Grid.Column="1"
                                    x:Name="MonthLabel"
-                                   Text="APRIL"
-                                   FontSize="20"
+                                   Text="MAY 2026"
+                                   FontSize="16"
                                    FontAttributes="Bold"
                                    HorizontalOptions="Center"
                                    VerticalOptions="Center"
-                                   TextColor="White" />
+                                   TextColor="White"/>
 
                             <Button Grid.Column="2"
                                     BackgroundColor="Transparent"
                                     Clicked="OnNextMonthClicked"
-                                    Padding="6"
-                                    x:Name="NextMonthButton">
-                                <Button.ImageSource>
-                                    <FontImageSource Glyph="&#xf054;"
-                                                     FontFamily="FontAwesome"
-                                                     Color="{StaticResource Orange}"
-                                                     Size="18"/>
-                                </Button.ImageSource>
-                            </Button>
+                                    Text="›"
+                                    TextColor="#FF8C00"
+                                    FontSize="28"
+                                    Padding="0"
+                                    WidthRequest="40"
+                                    HeightRequest="40"/>
                         </Grid>
 
-                        <Grid x:Name="CalendarGrid" ColumnDefinitions="*,*,*,*,*,*,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto" Margin="0,0,0,20">
-                            <Label Grid.Row="0" Grid.Column="0" Text="S" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="1" Text="M" FontSize="15" TextColor="{StaticResource SubText}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="2" Text="T" FontSize="15" TextColor="{StaticResource SubText}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="3" Text="W" FontSize="15" TextColor="{StaticResource SubText}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="4" Text="T" FontSize="15" TextColor="{StaticResource SubText}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="5" Text="F" FontSize="15" TextColor="{StaticResource SubText}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="0" Grid.Column="6" Text="S" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <!-- Week 1 -->
-                            <Label Grid.Row="1" Grid.Column="3" Text="1" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="1" Grid.Column="4" Text="2" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="1" Grid.Column="5" Text="3" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="1" Grid.Column="6" Text="4" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <!-- Week 2 -->
-                            <Label Grid.Row="2" Grid.Column="0" Text="5" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="1" Text="6" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="2" Text="7" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="3" Text="8" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="4" Text="9" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="5" Text="10" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="2" Grid.Column="6" Text="11" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <!-- Week 3 -->
-                            <Label Grid.Row="3" Grid.Column="0" Text="12" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="1" Text="13" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="2" Text="14" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="3" Text="15" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="4" Text="16" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="5" Text="17" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="3" Grid.Column="6" Text="18" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <!-- Week 4 -->
-                            <Label Grid.Row="4" Grid.Column="0" Text="19" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="1" Text="20" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="2" Text="21" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="3" Text="22" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="4" Text="23" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="5" Text="24" FontSize="15" TextColor="{StaticResource White}" HorizontalOptions="Center"/>
-                            <Label Grid.Row="4" Grid.Column="6" Text="25" FontSize="15" TextColor="{StaticResource Orange}" HorizontalOptions="Center"/>
+                        <!-- WEEKDAY HEADERS -->
+                        <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                            <Label Grid.Column="0" Text="Su" FontSize="12" TextColor="#FF8C00" HorizontalOptions="Center"/>
+                            <Label Grid.Column="1" Text="Mo" FontSize="12" TextColor="#888" HorizontalOptions="Center"/>
+                            <Label Grid.Column="2" Text="Tu" FontSize="12" TextColor="#888" HorizontalOptions="Center"/>
+                            <Label Grid.Column="3" Text="We" FontSize="12" TextColor="#888" HorizontalOptions="Center"/>
+                            <Label Grid.Column="4" Text="Th" FontSize="12" TextColor="#888" HorizontalOptions="Center"/>
+                            <Label Grid.Column="5" Text="Fr" FontSize="12" TextColor="#888" HorizontalOptions="Center"/>
+                            <Label Grid.Column="6" Text="Sa" FontSize="12" TextColor="#FF8C00" HorizontalOptions="Center"/>
                         </Grid>
+
+                        <!-- CALENDAR DAYS -->
+                        <Grid x:Name="CalendarGrid"
+                              ColumnDefinitions="*,*,*,*,*,*,*"
+                              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
+                              RowSpacing="4"
+                              ColumnSpacing="4"/>
+
                     </VerticalStackLayout>
+                </Border>
 
-                </VerticalStackLayout>
-
-                <BoxView HeightRequest="0.5"
-                         Color="{StaticResource Orange}"
-                         HorizontalOptions="Fill"
-                         Margin="0,6,0,8" />
-
-                <Label x:Name="CurrencyLabel"
-                       Text="Currency "
-                       FontSize="13"
-                       TextColor="{StaticResource Orange}"
-                       HorizontalOptions="Center"
-                       Margin="0,5,0,5"/>
-
-                <Label x:Name="DateLabel"
-                       Text="on April 29 2026"
-                       FontSize="13"
-                       TextColor="#FFFFFF"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,8"/>
-
-                <Label x:Name="TotalAmountLabel"
-                       FontSize="30"
-                       FontAttributes="Bold"
-                       HorizontalOptions="Center"
-                       Margin="0,0,0,25">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="₱ " TextColor="{StaticResource Orange}" FontSize="30" FontAttributes="Bold" />
-                            <Span Text="0.00" TextColor="{StaticResource White}" FontSize="30" FontAttributes="Bold" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
-
-                <Frame Style="{StaticResource CardStyle}"
-                       Margin="0,0,0,15"
-                       CornerRadius="8"
-                       BackgroundColor="#272727">
-                    <Grid ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="2">
-                            <Label Text="Funds were added"
-                                   FontSize="14"
-                                   FontAttributes="Bold"
-                                   TextColor="{StaticResource Orange}"/>
-                            <Label Text="Added · April 8"
-                                   FontSize="11"
-                                   TextColor="White"/>
-                        </VerticalStackLayout>
-                        <Label Grid.Column="1"
-                               Text="₱ 0.00"
-                               FontSize="14"
+                <!-- SELECTED DATE + SUMMARY -->
+                <Border BackgroundColor="#1E1E1E"
+                        StrokeThickness="0"
+                        Margin="0,0,0,16">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="20,16" Spacing="4">
+                        <Label x:Name="DateLabel"
+                               Text="Select a date"
+                               FontSize="13"
+                               TextColor="#888888"
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="TotalAmountLabel"
+                               Text="₱0.00"
+                               FontSize="32"
                                FontAttributes="Bold"
                                TextColor="White"
-                               VerticalOptions="Center"/>
-                    </Grid>
-                </Frame>
+                               HorizontalOptions="Center"/>
+                        <Label x:Name="SummaryLabel"
+                               Text="No transactions"
+                               FontSize="12"
+                               TextColor="#666"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- TRANSACTION LIST FOR SELECTED DATE -->
+                <CollectionView x:Name="DayTransactionCollection">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Vertical" ItemSpacing="10"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="#1E1E1E" StrokeThickness="0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="16"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="44,*,Auto"
+                                      Padding="14,14"
+                                      ColumnSpacing="12">
+
+                                    <Border Grid.Column="0"
+                                            BackgroundColor="#2A2A2A"
+                                            WidthRequest="44"
+                                            HeightRequest="44">
+                                        <Border.StrokeShape>
+                                            <Ellipse/>
+                                        </Border.StrokeShape>
+                                        <Label Text="{Binding TypeIcon}"
+                                               FontSize="18"
+                                               HorizontalOptions="Center"
+                                               VerticalOptions="Center"/>
+                                    </Border>
+
+                                    <VerticalStackLayout Grid.Column="1"
+                                                         Spacing="3"
+                                                         VerticalOptions="Center">
+                                        <Label Text="{Binding Title}"
+                                               FontSize="14"
+                                               FontAttributes="Bold"
+                                               TextColor="White"/>
+                                        <Label Text="{Binding Type}"
+                                               FontSize="11"
+                                               TextColor="#666666"/>
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="2"
+                                           Text="{Binding DisplayAmount}"
+                                           FontSize="15"
+                                           FontAttributes="Bold"
+                                           TextColor="{Binding AmountColor}"
+                                           VerticalOptions="Center"/>
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- ═══════════════════════════════════ -->
-        <!--           BOTTOM NAV BAR           -->
-        <!-- ═══════════════════════════════════ -->
-        <!-- ✅ CHANGED: added 3rd column for Profile -->
+        <!-- BOTTOM NAV BAR -->
         <Grid Grid.Row="1"
-              BackgroundColor="#1F1F1F"
+              BackgroundColor="#181818"
               ColumnDefinitions="*,*,*">
 
             <BoxView Grid.ColumnSpan="3"
-                     Color="{StaticResource Orange}"
-                     HeightRequest="2"
-                     VerticalOptions="Start"/>
+                     Color="#FF8C00"
+                     HeightRequest="1"
+                     VerticalOptions="Start"
+                     Opacity="0.4"/>
 
             <Button Grid.Column="0"
-                x:Name="HomeNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnHomeClicked"
-                ImageSource="home.png"
-                WidthRequest="150"
-                HeightRequest="50"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnHomeClicked"
+                    ImageSource="home.png"
+                    HeightRequest="50"/>
 
             <Button Grid.Column="1"
-                x:Name="CalendarNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnCalendarClicked"
-                ImageSource="calendar.png"
-                WidthRequest="50"
-                HeightRequest="50"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnCalendarClicked"
+                    ImageSource="calendar.png"
+                    HeightRequest="50"/>
 
             <Button Grid.Column="2"
-                x:Name="ProfileNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnProfileClicked"
-                ImageSource="profile.png"
-                WidthRequest="80"
-                HeightRequest="50"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnProfileClicked"
+                    ImageSource="profile.png"
+                    HeightRequest="50"/>
 
         </Grid>
 

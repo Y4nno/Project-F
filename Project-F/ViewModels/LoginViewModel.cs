@@ -1,4 +1,5 @@
-﻿using Project_F.Services;
+﻿using Project_F;
+using Project_F.Services;
 using System.Windows.Input;
 
 public class LoginViewModel
@@ -26,12 +27,12 @@ public class LoginViewModel
         Preferences.Set("idToken", token);
         Preferences.Set("uid", uid);
 
-        // ✅ Fetch name from Firestore and save it
         string? displayName = await _authService.GetUserNameAsync(uid!, token!);
-        Preferences.Set("user_display_name", displayName ?? Email.Split('@')[0]);
+        string username = displayName ?? Email.Split('@')[0];
+
+        Preferences.Set("user_display_name", username);
+        App.UserId = username; // ✅ now stores username, not uid
 
         await Shell.Current.GoToAsync("//HomePage");
     }
-
-
 }

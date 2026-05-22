@@ -11,6 +11,7 @@ public partial class HomePage : ContentPage
 
     double totalBalance = 0;
     string selectedType = "Income";
+    string selectedIcon = "💰";
     string userId => App.UserId;
 
     public HomePage()
@@ -20,20 +21,36 @@ public partial class HomePage : ContentPage
         _ = LoadTransactions();
     }
 
+    // ── ICON SELECTION ────────────────────────────────
+    private void OnIconSelected(object sender, TappedEventArgs e)
+    {
+        if (e.Parameter is string icon)
+        {
+            selectedIcon = icon;
+            SelectedIconLabel.Text = icon;
+        }
+    }
+
     // ── FUNDS POPUP ───────────────────────────────────
     private void OnAddFundsClicked(object sender, EventArgs e)
     {
         selectedType = "Income";
+        selectedIcon = "💰";
         PopupTitle.Text = "Add Funds";
         FundsAmountEntry.Text = "";
+        FundsDescriptionEntry.Text = "";
+        SelectedIconLabel.Text = "💰";
         FundsOverlay.IsVisible = true;
     }
 
     private void OnMinusFundsClicked(object sender, EventArgs e)
     {
         selectedType = "Expense";
+        selectedIcon = "💸";
         PopupTitle.Text = "Minus Funds";
         FundsAmountEntry.Text = "";
+        FundsDescriptionEntry.Text = "";
+        SelectedIconLabel.Text = "💸";
         FundsOverlay.IsVisible = true;
     }
 
@@ -45,22 +62,25 @@ public partial class HomePage : ContentPage
             return;
         }
 
-        var transaction = new TransactionModel
+        if (string.IsNullOrEmpty(userId))
         {
-            Title = selectedType == "Income" ? "Funds were added" : "Funds were deducted",
-            Amount = amount,
-            Type = selectedType,
-            UserId = userId
-        };
+            await DisplayAlert("Error", "User ID is missing. Please log in again.", "OK");
+            return;
+        }
+
+        string description = string.IsNullOrWhiteSpace(FundsDescriptionEntry.Text)
+            ? (selectedType == "Income" ? "Funds were added" : "Funds were deducted")
+            : FundsDescriptionEntry.Text.Trim();
 
         var firestoreData = new
         {
             fields = new
             {
-                Title = new { stringValue = transaction.Title },
-                Amount = new { doubleValue = transaction.Amount },
-                Type = new { stringValue = transaction.Type },
-                UserId = new { stringValue = transaction.UserId }
+                Title = new { stringValue = description },
+                Icon = new { stringValue = selectedIcon },
+                Amount = new { doubleValue = amount },
+                Type = new { stringValue = selectedType },
+                UserId = new { stringValue = userId }
             }
         };
 
@@ -148,9 +168,13 @@ public partial class HomePage : ContentPage
                 else if (doc.fields.Amount.integerValue != null)
                     amount = (double)doc.fields.Amount.integerValue;
 
+                string icon = "💰";
+                try { icon = doc.fields.Icon.stringValue ?? "💰"; } catch { }
+
                 var transaction = new TransactionModel
                 {
                     Title = doc.fields.Title.stringValue,
+                    Icon = icon,
                     Amount = amount,
                     Type = doc.fields.Type.stringValue,
                     UserId = uid

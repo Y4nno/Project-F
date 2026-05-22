@@ -3,146 +3,267 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Project_F.ViewModels"
              x:Class="Project_F.Pages.ProfilePage"
-             BackgroundColor="#1D1D1D"
+             BackgroundColor="#121212"
              Shell.NavBarIsVisible="False">
 
     <ContentPage.BindingContext>
         <vm:ProfileViewModel />
     </ContentPage.BindingContext>
 
-    <Grid RowDefinitions="*, 70">
+    <Grid RowDefinitions="*,70">
 
-        <!-- ===== MAIN CONTENT ===== -->
         <ScrollView Grid.Row="0">
-            <VerticalStackLayout
-                Padding="40,60,40,40"
-                Spacing="0"
-                VerticalOptions="Center"
-                HorizontalOptions="Center">
+            <VerticalStackLayout Padding="24,50,24,24" Spacing="20">
 
-                <!-- Avatar Icon -->
-                <Border
-                    WidthRequest="90"
-                    HeightRequest="90"
-                    HorizontalOptions="Center"
-                    BackgroundColor="Transparent"
-                    StrokeThickness="0">
+                <!-- AVATAR + NAME -->
+                <VerticalStackLayout Spacing="12" HorizontalOptions="Center" Margin="0,0,0,8">
+                    <Border BackgroundColor="#FF8C00"
+                            WidthRequest="80"
+                            HeightRequest="80"
+                            HorizontalOptions="Center">
+                        <Border.StrokeShape>
+                            <Ellipse/>
+                        </Border.StrokeShape>
+                        <Border.Shadow>
+                            <Shadow Brush="#FF8C00" Offset="0,6" Radius="20" Opacity="0.4"/>
+                        </Border.Shadow>
+                        <Label Text="{Binding AvatarInitial}"
+                               FontSize="32"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </Border>
+
+                    <Label Text="{Binding DisplayName}"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center"/>
+
+                    <Border BackgroundColor="#FF8C0022"
+                            StrokeThickness="0"
+                            HorizontalOptions="Center"
+                            Padding="12,4">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Label Text="Active Account"
+                               FontSize="11"
+                               TextColor="#FF8C00"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- BALANCE CARD -->
+                <Border Margin="0,0,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#FF8C00" Offset="0.0"/>
+                            <GradientStop Color="#CC5500" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="45" />
+                        <RoundRectangle CornerRadius="24"/>
                     </Border.StrokeShape>
-                    <Image
-                        Source="profile_avatar.png"
-                        WidthRequest="90"
-                        HeightRequest="90"
-                        HorizontalOptions="Center" />
+                    <Border.Shadow>
+                        <Shadow Brush="#FF8C00" Offset="0,6" Radius="18" Opacity="0.3"/>
+                    </Border.Shadow>
+                    <VerticalStackLayout Padding="24,20" Spacing="4">
+                        <Label Text="NET BALANCE"
+                               FontSize="11"
+                               TextColor="#FFE0B2"
+                               CharacterSpacing="2"
+                               HorizontalOptions="Center"/>
+                        <Label Text="{Binding TotalBalance}"
+                               FontSize="36"
+                               FontAttributes="Bold"
+                               TextColor="White"
+                               HorizontalOptions="Center"/>
+                        <Label Text="{Binding TransactionCount, StringFormat='{0} total transactions'}"
+                               FontSize="12"
+                               TextColor="#FFE0B2"
+                               HorizontalOptions="Center"
+                               Opacity="0.8"/>
+                    </VerticalStackLayout>
                 </Border>
 
-                <!-- Display Name -->
-                <Label
-                    Text="{Binding DisplayName}"
-                    FontSize="22"
-                    FontAttributes="Bold"
-                    HorizontalOptions="Center"
-                    Margin="0,14,0,48">
-                    <Label.FormattedText>
-                        <FormattedString>
-                            <Span Text="{Binding DisplayName}"
-                                  TextColor="{StaticResource Orange}"
-                                  FontAttributes="Bold"
-                                  FontSize="22" />
-                        </FormattedString>
-                    </Label.FormattedText>
-                </Label>
+                <!-- INCOME / EXPENSE CARDS -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
 
-                <!-- Switch Account Button -->
-                <Border
-                    Margin="0,0,0,16"
-                    Padding="0"
-                    WidthRequest="220"
-                    HeightRequest="48"
-                    BackgroundColor="#2A2A2A"
-                    Stroke="{StaticResource Orange}"
-                    StrokeThickness="1.5"
-                    HorizontalOptions="Center">
-                    <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
-                    </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SwitchAccountCommand}" />
-                    </Border.GestureRecognizers>
-                    <Label
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        FontSize="15">
-                        <Label.FormattedText>
-                            <FormattedString>
-                                <Span Text="Switch " TextColor="{StaticResource Orange}" FontAttributes="Bold" FontSize="15"/>
-                                <Span Text="Account" TextColor="#FFFFFF" FontSize="15"/>
-                            </FormattedString>
-                        </Label.FormattedText>
-                    </Label>
-                </Border>
+                    <!-- INCOME -->
+                    <Border Grid.Column="0"
+                            BackgroundColor="#1E1E1E"
+                            StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="16,16" Spacing="6">
+                            <Border BackgroundColor="#4CAF5022"
+                                    StrokeThickness="0"
+                                    WidthRequest="36"
+                                    HeightRequest="36">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Label Text="↑"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#4CAF50"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Income"
+                                   FontSize="12"
+                                   TextColor="#888888"/>
+                            <Label Text="{Binding TotalIncome}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#4CAF50"/>
+                        </VerticalStackLayout>
+                    </Border>
 
-                <!-- Log Out Button -->
-                <Border
-                    Padding="0"
-                    WidthRequest="220"
-                    HeightRequest="48"
-                    BackgroundColor="#2A2A2A"
-                    Stroke="{StaticResource Orange}"
-                    StrokeThickness="1.5"
-                    HorizontalOptions="Center">
+                    <!-- EXPENSES -->
+                    <Border Grid.Column="1"
+                            BackgroundColor="#1E1E1E"
+                            StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <VerticalStackLayout Padding="16,16" Spacing="6">
+                            <Border BackgroundColor="#FF525222"
+                                    StrokeThickness="0"
+                                    WidthRequest="36"
+                                    HeightRequest="36">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Label Text="↓"
+                                       FontSize="18"
+                                       FontAttributes="Bold"
+                                       TextColor="#FF5252"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Expenses"
+                                   FontSize="12"
+                                   TextColor="#888888"/>
+                            <Label Text="{Binding TotalExpenses}"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="#FF5252"/>
+                        </VerticalStackLayout>
+                    </Border>
+
+                </Grid>
+
+                <!-- ACCOUNT ACTIONS -->
+                <Border BackgroundColor="#1E1E1E"
+                        StrokeThickness="0">
                     <Border.StrokeShape>
-                        <RoundRectangle CornerRadius="8" />
+                        <RoundRectangle CornerRadius="20"/>
                     </Border.StrokeShape>
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding LogOutCommand}" />
-                    </Border.GestureRecognizers>
-                    <Label
-                        Text="Log Out"
-                        TextColor="#FFFFFF"
-                        HorizontalOptions="Center"
-                        VerticalOptions="Center"
-                        FontSize="15" />
+                    <VerticalStackLayout Padding="4,8" Spacing="0">
+
+                        <!-- SWITCH ACCOUNT -->
+                        <Grid ColumnDefinitions="36,*,Auto"
+                              Padding="16,14"
+                              ColumnSpacing="12">
+                            <Border Grid.Column="0"
+                                    BackgroundColor="#FF8C0022"
+                                    WidthRequest="36"
+                                    HeightRequest="36">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Label Text="⇄"
+                                       FontSize="16"
+                                       TextColor="#FF8C00"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1"
+                                   Text="Switch Account"
+                                   FontSize="14"
+                                   TextColor="White"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="20"
+                                   TextColor="#444"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SwitchAccountCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView HeightRequest="0.5" Color="#2A2A2A" Margin="16,0"/>
+
+                        <!-- LOG OUT -->
+                        <Grid ColumnDefinitions="36,*,Auto"
+                              Padding="16,14"
+                              ColumnSpacing="12">
+                            <Border Grid.Column="0"
+                                    BackgroundColor="#FF525222"
+                                    WidthRequest="36"
+                                    HeightRequest="36">
+                                <Border.StrokeShape>
+                                    <Ellipse/>
+                                </Border.StrokeShape>
+                                <Label Text="⏻"
+                                       FontSize="16"
+                                       TextColor="#FF5252"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+                            </Border>
+                            <Label Grid.Column="1"
+                                   Text="Log Out"
+                                   FontSize="14"
+                                   TextColor="#FF5252"
+                                   VerticalOptions="Center"/>
+                            <Label Grid.Column="2"
+                                   Text="›"
+                                   FontSize="20"
+                                   TextColor="#444"
+                                   VerticalOptions="Center"/>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding LogOutCommand}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                    </VerticalStackLayout>
                 </Border>
 
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- ===== BOTTOM NAV BAR (copied from CalendarPage) ===== -->
+        <!-- BOTTOM NAV BAR -->
         <Grid Grid.Row="1"
-              BackgroundColor="#1F1F1F"
+              BackgroundColor="#181818"
               ColumnDefinitions="*,*,*">
 
             <BoxView Grid.ColumnSpan="3"
-                     Color="{StaticResource Orange}"
-                     HeightRequest="2"
-                     VerticalOptions="Start"/>
+                     Color="#FF8C00"
+                     HeightRequest="1"
+                     VerticalOptions="Start"
+                     Opacity="0.4"/>
 
-            <!-- Home Button -->
             <Button Grid.Column="0"
-                x:Name="HomeNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnHomeClicked"
-                ImageSource="home.png"
-                WidthRequest="150"
-                HeightRequest="50"/>        
+                    BackgroundColor="Transparent"
+                    Clicked="OnHomeClicked"
+                    ImageSource="home.png"
+                    HeightRequest="50"/>
 
             <Button Grid.Column="1"
-                x:Name="CalendarNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnCalendarClicked"
-                ImageSource="calendar.png"
-                WidthRequest="50"
-                HeightRequest="50"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnCalendarClicked"
+                    ImageSource="calendar.png"
+                    HeightRequest="50"/>
 
             <Button Grid.Column="2"
-                x:Name="ProfileNavButton"
-                BackgroundColor="Transparent"
-                Clicked="OnProfileClicked"
-                ImageSource="profile.png"
-                WidthRequest="80"
-                HeightRequest="50"/>
+                    BackgroundColor="Transparent"
+                    Clicked="OnProfileClicked"
+                    ImageSource="profile.png"
+                    HeightRequest="50"/>
 
         </Grid>
 
